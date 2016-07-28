@@ -2,6 +2,11 @@ import { expect } from 'chai';
 
 import { handler } from '../src';
 
+function randomId() {
+  const template = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx';
+  return template.replace(/x/g, () => (Math.random() * 16 | 0).toString(16));
+}
+
 describe('handler', () => {
   let request;
   let response;
@@ -13,10 +18,10 @@ describe('handler', () => {
   beforeEach(() => {
     request = {
       session: {
-        sessionId: `session${Math.floor(Math.random() * 1000)}`,
+        sessionId: `amzn1.echo-api.session.${randomId()}`,
         attributes: {},
         user: {
-          userId: `user${Math.floor(Math.random() * 1000)}`,
+          userId: `amzn1.ask.account.${randomId()}`,
         },
         application: {
           applicationId: 'amzn1.ask.skill.892358bf-175d-44ca-815e-331f0302d533',
@@ -24,7 +29,7 @@ describe('handler', () => {
       },
       version: '1.0',
       request: {
-        requestId: `request${Math.floor(Math.random() * 1000)}`,
+        requestId: `amzn1.echo-api.request.${randomId()}`,
       },
     };
     response = null;
