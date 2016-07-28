@@ -8,12 +8,12 @@ module.exports = {
   devtool: isProd ? 'hidden-source-map' : 'cheap-eval-source-map',
   context: path.join(__dirname, './src'),
   entry: {
-    js: './index.js'
+    js: './index.js',
   },
   output: {
     path: path.join(__dirname, './build'),
     libraryTarget: 'umd',
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
   module: {
     loaders: [
@@ -21,37 +21,37 @@ module.exports = {
         test: /\.js$/,
         // exclude: /node_modules/,
         loaders: [
-          'babel-loader'
-        ]
+          'babel-loader',
+        ],
       },
     ],
   },
   externals: [
-    'aws-sdk'
+    'aws-sdk',
   ],
   resolve: {
     extensions: ['', '.js'],
     modules: [
       path.resolve('./src'),
-      'node_modules'
-    ]
+      'node_modules',
+    ],
   },
   plugins: [
     new webpack.LoaderOptionsPlugin({
       minimize: true,
-      debug: false
+      debug: false,
     }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
-        warnings: false
+        warnings: false,
       },
       output: {
-        comments: false
+        comments: false,
       },
-      sourceMap: false
+      sourceMap: false,
     }),
     new webpack.DefinePlugin({
-      'process.env': { NODE_ENV: JSON.stringify(nodeEnv) }
-    })
+      'process.env': { NODE_ENV: JSON.stringify(nodeEnv) },
+    }),
   ],
 };
