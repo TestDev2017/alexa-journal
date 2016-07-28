@@ -1,2 +1,2 @@
-# note-taker
-Alexa Skill for taking notes in Google Docs and Sheets
+# log-entry
+Alexa Skill for entering logs in Google Docs and Sheets

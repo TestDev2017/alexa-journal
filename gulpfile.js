@@ -5,5 +5,5 @@ const zip = require('gulp-zip');
 gulp.task('default', () =>
   gulp.src('build/bundle.js')
     .pipe(zip('build/build.zip'))
-    .pipe(lambda('note-taker'))
+    .pipe(lambda('log-entry'))
     .pipe(gulp.dest('.')));
