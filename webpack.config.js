@@ -20,9 +20,23 @@ module.exports = {
       {
         test: /\.js$/,
         // exclude: /node_modules/,
-        loaders: [
-          'babel-loader',
+        include: [
+          path.join(__dirname, './src'),
+          path.join(__dirname, './node_modules/alexa-sdk'),
         ],
+        loader: 'babel-loader',
+        query: {
+          plugins: [
+            // node4 with native modules
+            'transform-es2015-function-name',
+            'transform-es2015-sticky-regex',
+            'transform-es2015-unicode-regex',
+            'transform-es2015-spread',
+            'transform-es2015-parameters',
+            'transform-es2015-destructuring',
+            'transform-es2015-shorthand-properties',
+          ],
+        },
       },
     ],
   },
