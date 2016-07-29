@@ -29,6 +29,13 @@ const handlers = {
       `I'll save your logs in a ${destination} called Alexa Journal. Listening for your new log entry.`,
       'Ready for your new log entry.');
   },
+  'AMAZON.HelpIntent'() {
+    const help = 'Your journal is a quick way to take timestamped notes. It isn\'t that accurate, but it\'s good enough to keep track of things. After you\'ve linked the account to Google Drive, the journal entries will show up either, in a single document, in a folder full of documents, or as rows on a spreadsheet. You can change this by saying, "save in a single document", "save in a folder", or "save in a spreadsheet". You can launch your journal, or it can start listening immediately. For example if you say, "Alexa, tell my journal I had five oranges for dinner." An entry will instantly appear in your journal.';
+    this.emit(':tellWithCard', help, 'Help', help);
+  },
+  'AMAZON.StopIntent'() {
+    this.emit(':tell', '');
+  },
   'EntryIntent'() {
     if (! this.event.session.user.hasOwnProperty('accessToken')) {
       this.emit('LinkIntent');
@@ -47,8 +54,8 @@ const handlers = {
     console.log(`saving: ${JSON.stringify(this.attributes)}`);
     this.emit(':saveState', true);
   },
-  'HelloWorldIntent'() {
-    this.emit(':tell', 'Hello World!');
+  'Unhandled'() {
+    this.emit('AMAZON.HelpIntent');
   },
 };
 
