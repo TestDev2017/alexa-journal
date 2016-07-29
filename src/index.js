@@ -2,7 +2,33 @@ import { handler as alexaHandler } from 'alexa-sdk';
 
 const handlers = {
   'LaunchRequest'() {
-    this.emit(':tell', 'launched');
+    console.log(`read: ${JSON.stringify(this.attributes)}`);
+    if (! this.event.session.user.hasOwnProperty('accessToken')) {
+      this.emit('LinkIntent');
+    } else if (! this.attributes.hasOwnProperty('destination')) {
+      this.emit('ConfigureIntent');
+    } else {
+      this.emit(':ask',
+        'Listening for your new journal entry.',
+        'Ready for your new journal entry.');
+    }
+  },
+  'LinkIntent'() {
+    this.emit(':tellWithLinkAccountCard',
+      'Your journal is saved in Google Drive. Please use the Alexa app to link your Google account first.');
+  },
+  'ConfigureIntent'() {
+    this.emit(':ask',
+      'How would you like to save your log entries? Pick one of the following, "save in a single document", "save in a folder", or "save in a spreadsheet". You can change this at any time.',
+      '"save in a single document", "save in a folder", or "save in a spreadsheet"?');
+  },
+  'SaveDestinationIntent'() {
+    const destination = this.event.request.intent.slots.Destination.value;
+    this.attributes.destination = destination;
+    this.emit(':ask',
+      `I'll save your logs in a ${destination} called Alexa Journal. Listening for your new log entry.`,
+      'Ready for your new log entry.');
+  },
   'EntryIntent'() {
     if (! this.event.session.user.hasOwnProperty('accessToken')) {
       this.emit('LinkIntent');
